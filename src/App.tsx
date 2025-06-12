@@ -10,8 +10,15 @@ const App: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
 
   const handleConfigSubmit = (config: TestConfig) => {
+    if (
+      testConfig &&
+      (testConfig.numberOfQuestions !== config.numberOfQuestions ||
+        testConfig.answerKey.join(",") !== config.answerKey.join(","))
+    ) {
+      setStudents([]); // tylko jeśli konfiguracja się zmienia
+    }
+
     setTestConfig(config);
-    setStudents([]); // resetuj uczniów przy zmianie konfiguracji
     setStep("students");
   };
 
@@ -24,13 +31,13 @@ const App: React.FC = () => {
     <div style={{ padding: "2rem" }}>
       <h1>Aplikacja do sprawdzania testów</h1>
 
-      {step === "config" && (
-        <TestConfigForm onSubmit={handleConfigSubmit} />
-      )}
+      {step === "config" && <TestConfigForm onSubmit={handleConfigSubmit} />}
 
       {step === "students" && testConfig && (
         <StudentForm
           numberOfQuestions={testConfig.numberOfQuestions}
+          students={students}
+          setStudents={setStudents}
           onSubmitAll={handleStudentsSubmit}
         />
       )}

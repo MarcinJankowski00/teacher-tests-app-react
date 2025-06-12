@@ -21,8 +21,10 @@ export const Results: React.FC<Props> = ({
 
       <ul>
         {students.map((student) => {
-          const score = student.answers.reduce((acc, answer, index) =>
-            answer === config.answerKey[index] ? acc + 1 : acc, 0
+          const score = student.answers.reduce(
+            (acc, answer, index) =>
+              answer === config.answerKey[index] ? acc + 1 : acc,
+            0
           );
 
           return (
