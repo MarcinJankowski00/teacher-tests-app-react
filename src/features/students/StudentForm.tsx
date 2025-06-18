@@ -1,21 +1,35 @@
-import React, { useState } from "react";
-import type { Student } from "../types";
+import React, { useState, useEffect } from "react";
+import type { Student } from "../../types";
 
 type Props = {
   numberOfQuestions: number;
-  students: Student[];
-  setStudents: React.Dispatch<React.SetStateAction<Student[]>>;
+  students: Student[]; // teraz z propsów, nie lokalnego stanu
+  setStudents: (students: Student[]) => void; // funkcja do aktualizacji globalnego stanu
   onSubmitAll: (students: Student[]) => void;
 };
 
 export const StudentForm: React.FC<Props> = ({
   numberOfQuestions,
+  students,
+  setStudents,
   onSubmitAll,
 }) => {
-  const [students, setStudents] = useState<Student[]>([]);
   const [studentId, setStudentId] = useState("");
   const [studentAnswers, setStudentAnswers] = useState("");
-  const [editingIndex, setEditingIndex] = useState<number | null>(null); // ← nowość
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  // Gdy zmieni się edytowany uczeń (indeks), ładujemy dane do formularza
+  useEffect(() => {
+    if (editingIndex !== null && students[editingIndex]) {
+      const s = students[editingIndex];
+      setStudentId(s.id);
+      setStudentAnswers(s.answers.join(","));
+    } else {
+      // czyścimy formularz
+      setStudentId("");
+      setStudentAnswers("");
+    }
+  }, [editingIndex, students]);
 
   const handleAddOrUpdateStudent = () => {
     const answers = studentAnswers.trim().split(",");
@@ -38,6 +52,11 @@ export const StudentForm: React.FC<Props> = ({
       setStudents(updated);
       setEditingIndex(null);
     } else {
+      // Sprawdź, czy ID nie istnieje już (opcjonalnie)
+      if (students.some((s) => s.id === newStudent.id)) {
+        alert("Uczeń o takim ID już istnieje!");
+        return;
+      }
       setStudents([...students, newStudent]);
     }
 
@@ -46,9 +65,6 @@ export const StudentForm: React.FC<Props> = ({
   };
 
   const handleEdit = (index: number) => {
-    const s = students[index];
-    setStudentId(s.id);
-    setStudentAnswers(s.answers.join(","));
     setEditingIndex(index);
   };
 
@@ -56,10 +72,7 @@ export const StudentForm: React.FC<Props> = ({
     const updated = [...students];
     updated.splice(index, 1);
     setStudents(updated);
-    // Jeśli edytowany został usunięty – zresetuj edycję
     if (editingIndex === index) {
-      setStudentId("");
-      setStudentAnswers("");
       setEditingIndex(null);
     }
   };
@@ -103,11 +116,7 @@ export const StudentForm: React.FC<Props> = ({
       {editingIndex !== null && (
         <button
           type="button"
-          onClick={() => {
-            setEditingIndex(null);
-            setStudentId("");
-            setStudentAnswers("");
-          }}
+          onClick={() => setEditingIndex(null)}
           style={{ marginLeft: "1rem" }}
         >
           Anuluj edycję

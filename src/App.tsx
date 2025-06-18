@@ -1,29 +1,33 @@
 import React, { useState } from "react";
-import { TestConfigForm } from "./components/TestConfigForm";
-import { StudentForm } from "./components/StudentForm";
+import { useAppSelector} from "./hooks/useAppSelector"; 
+import { useAppDispatch} from "./hooks/useAppDispatch";// Twoje typed hooki
+import { TestConfigForm } from "./features/testConfig/TestConfigForm";
+import { StudentForm } from "./features/students/StudentForm";
 import { Results } from "./components/Results";
-import type { TestConfig, Student } from "./types";
+
+import { setTestConfig } from "./features/testConfig/testConfigSlice";
+import {
+  setStudents,
+} from "./features/students/studentsSlice";
 
 const App: React.FC = () => {
   const [step, setStep] = useState<"config" | "students" | "results">("config");
-  const [testConfig, setTestConfig] = useState<TestConfig | null>(null);
-  const [students, setStudents] = useState<Student[]>([]);
 
-  const handleConfigSubmit = (config: TestConfig) => {
-    if (
-      testConfig &&
-      (testConfig.numberOfQuestions !== config.numberOfQuestions ||
-        testConfig.answerKey.join(",") !== config.answerKey.join(","))
-    ) {
-      setStudents([]); // tylko jeśli konfiguracja się zmienia
-    }
+  const dispatch = useAppDispatch();
 
-    setTestConfig(config);
-    setStep("students");
-  };
+  // Pobieramy z store
+  const testConfig = useAppSelector((state) => state.testConfig);
+  const students = useAppSelector((state) => state.students.list);
 
-  const handleStudentsSubmit = (studentList: Student[]) => {
-    setStudents(studentList);
+  // Funkcja do zatwierdzania konfiguracji testu
+ const handleConfigSubmit = (config: { numberOfQuestions: number; answerKey: string[] }) => {
+  dispatch(setTestConfig(config));
+  setStep("students");
+};
+
+  // Funkcja do zatwierdzania listy uczniów i przejścia do wyników
+  const handleStudentsSubmit = (studentList: typeof students) => {
+    dispatch(setStudents(studentList));
     setStep("results");
   };
 
@@ -33,16 +37,16 @@ const App: React.FC = () => {
 
       {step === "config" && <TestConfigForm onSubmit={handleConfigSubmit} />}
 
-      {step === "students" && testConfig && (
+      {step === "students" && testConfig.numberOfQuestions > 0 && (
         <StudentForm
           numberOfQuestions={testConfig.numberOfQuestions}
           students={students}
-          setStudents={setStudents}
+          setStudents={(students) => dispatch(setStudents(students))}
           onSubmitAll={handleStudentsSubmit}
         />
       )}
 
-      {step === "results" && testConfig && (
+      {step === "results" && testConfig.numberOfQuestions > 0 && (
         <Results
           students={students}
           config={testConfig}
