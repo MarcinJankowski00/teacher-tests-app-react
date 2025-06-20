@@ -21,15 +21,15 @@ export const Results: React.FC<Props> = ({
 
       <ul>
         {students.map((student) => {
-          const score = student.answers.reduce(
-            (acc, answer, index) =>
-              answer === config.answerKey[index] ? acc + 1 : acc,
-            0
-          );
+          const score = student.answers.reduce((acc, answer, index) => {
+            const rowIndex = student.row - 1;
+            const correctAnswer = config.answerKey[rowIndex]?.[index];
+            return answer === correctAnswer ? acc + 1 : acc;
+          }, 0);
 
           return (
             <li key={student.id}>
-              {student.id}: {score} / {config.numberOfQuestions}
+              {student.id} (rząd {student.row}.): {score} / {config.numberOfQuestions}
             </li>
           );
         })}

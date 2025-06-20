@@ -1,11 +1,13 @@
 export type TestConfig = {
-    numberOfQuestions: number;
-    answerKey: string[]; // np. ['A', 'C', 'B', ...]
-  };
+  numberOfQuestions: number;
+  numberOfRows: number; // <-- nowy
+  answerKey: string[][]; // <-- jeden klucz odpowiedzi na rząd
+};
   
   export type Student = {
     id: string;
     answers: string[];
+    row: number;
     score?: number;
     grade?: string;
   };

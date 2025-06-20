@@ -10,32 +10,60 @@ type Props = {
 
 export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
   const dispatch = useAppDispatch();
-
-  // pobieramy dane z Reduxa
   const config = useAppSelector((state) => state.testConfig);
 
-  // ustawiamy dane początkowe z Reduxa
   const [numberOfQuestions, setNumberOfQuestions] = useState(10);
-  const [answerKey, setAnswerKey] = useState("");
+  const [numberOfRows, setNumberOfRows] = useState(1);
+  const [answerKey, setAnswerKey] = useState<string[]>([""]);
 
+  // Jeśli mamy dane z Reduxa, ustaw je
   useEffect(() => {
     if (config) {
       setNumberOfQuestions(config.numberOfQuestions);
-      setAnswerKey(config.answerKey.join(","));
+      setNumberOfRows(config.numberOfRows || 1);
+      setAnswerKey(
+        config.answerKey.map((row) => row.join(","))
+      );
     }
   }, [config]);
 
+  // Obsługa zmiany liczby rzędów
+  useEffect(() => {
+    setAnswerKey((prev) => {
+      const updated = [...prev];
+      while (updated.length < numberOfRows) updated.push("");
+      while (updated.length > numberOfRows) updated.pop();
+      return updated;
+    });
+  }, [numberOfRows]);
+
+  const handleAnswerChange = (rowIndex: number, value: string) => {
+    const updated = [...answerKey];
+    updated[rowIndex] = value;
+    setAnswerKey(updated);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const answers = answerKey.trim().split(",").map((a) => a.trim());
+    const parsedAnswerKey: string[][] = [];
 
-    if (answers.length !== numberOfQuestions) {
-      alert("Liczba odpowiedzi musi odpowiadać liczbie pytań.");
-      return;
+    for (let i = 0; i < numberOfRows; i++) {
+      const answers = answerKey[i].split(",").map((a) => a.trim());
+      if (answers.length !== numberOfQuestions) {
+        alert(`Rząd ${i + 1}: liczba odpowiedzi musi być równa liczbie pytań.`);
+        return;
+      }
+      parsedAnswerKey.push(answers);
     }
 
-    dispatch(setTestConfig({ numberOfQuestions, answerKey: answers }));
-    onSubmit({ numberOfQuestions, answerKey: answers });
+    const finalConfig: TestConfig = {
+      numberOfQuestions,
+      numberOfRows,
+      answerKey: parsedAnswerKey,
+    };
+
+    dispatch(setTestConfig(finalConfig));
+    onSubmit(finalConfig);
   };
 
   return (
@@ -44,19 +72,37 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
         Liczba pytań:
         <input
           type="number"
+          min={1}
           value={numberOfQuestions}
           onChange={(e) => setNumberOfQuestions(Number(e.target.value))}
         />
       </label>
       <br />
+
       <label>
-        Klucz odpowiedzi (np. A,B,C,...):
+        Liczba rzędów:
         <input
-          type="text"
-          value={answerKey}
-          onChange={(e) => setAnswerKey(e.target.value)}
+          type="number"
+          min={1}
+          value={numberOfRows}
+          onChange={(e) => setNumberOfRows(Number(e.target.value))}
         />
       </label>
+      <br />
+
+      {Array.from({ length: numberOfRows }, (_, i) => (
+        <div key={i}>
+          <label>
+            Klucz odpowiedzi – rząd {i + 1}:
+            <input
+              type="text"
+              value={answerKey[i] || ""}
+              onChange={(e) => handleAnswerChange(i, e.target.value)}
+            />
+          </label>
+        </div>
+      ))}
+
       <br />
       <button type="submit">Zatwierdź</button>
     </form>

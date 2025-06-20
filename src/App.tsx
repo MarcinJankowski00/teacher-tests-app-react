@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const students = useAppSelector((state) => state.students.list);
 
   // Funkcja do zatwierdzania konfiguracji testu
- const handleConfigSubmit = (config: { numberOfQuestions: number; answerKey: string[] }) => {
+ const handleConfigSubmit = (config: { numberOfQuestions: number; numberOfRows: number; answerKey: string[][] }) => {
   dispatch(setTestConfig(config));
   setStep("students");
 };
@@ -40,6 +40,7 @@ const App: React.FC = () => {
       {step === "students" && testConfig.numberOfQuestions > 0 && (
         <StudentForm
           numberOfQuestions={testConfig.numberOfQuestions}
+          numberOfRows={testConfig.numberOfRows}
           students={students}
           setStudents={(students) => dispatch(setStudents(students))}
           onSubmitAll={handleStudentsSubmit}
