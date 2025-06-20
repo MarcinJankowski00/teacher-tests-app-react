@@ -32,7 +32,6 @@ export const StudentForm: React.FC<Props> = ({
     } else {
       setStudentId("");
       setStudentAnswers("");
-      setStudentRow(1);
     }
   }, [editingIndex, students]);
 
@@ -70,7 +69,6 @@ export const StudentForm: React.FC<Props> = ({
 
     setStudentId("");
     setStudentAnswers("");
-    setStudentRow(1);
   };
 
   const handleEdit = (index: number) => {
@@ -109,7 +107,7 @@ export const StudentForm: React.FC<Props> = ({
       <br />
 
       <label>
-        Odpowiedzi (np. A,B,C,...):
+        Odpowiedzi (np. a,b,c,...):
         <input
           type="text"
           value={studentAnswers}
@@ -148,15 +146,24 @@ export const StudentForm: React.FC<Props> = ({
       )}
 
       <h4>Dodani uczniowie ({students.length}):</h4>
-      <ul>
+      <table>
+        <tr>
+          <th>ID ucznia</th>
+          <th>Rząd</th>
+          <th>Odpowiedzi</th>
+          <th></th>
+          <th></th>
+        </tr>
         {students.map((s, i) => (
-          <li key={s.id}>
-            <strong>{s.id}</strong> (rząd {s.row}): {s.answers.join(", ")}{" "}
-            <button onClick={() => handleEdit(i)}>Edytuj</button>{" "}
-            <button onClick={() => handleDelete(i)}>Usuń</button>
-          </li>
+            <tr key={s.id}>
+              <td><strong>{s.id}</strong></td>
+              <td>{s.row}</td>
+              <td>{s.answers.join(", ")}</td>
+              <td><button onClick={() => handleEdit(i)}>Edytuj</button></td>
+              <td><button onClick={() => handleDelete(i)}>Usuń</button></td>
+            </tr>
         ))}
-      </ul>
+      </table>
 
       <button onClick={handleSubmitAll}>Zatwierdź wszystkich</button>
       <div style={{ marginTop: "1rem" }}>
