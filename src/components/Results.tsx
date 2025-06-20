@@ -34,7 +34,33 @@ export const Results: React.FC<Props> = ({
           );
         })}
       </ul>
+      <table>
+        <tr>
+          <th>ID ucznia</th>
+          <th>Rząd</th>
+          <th>Odpowiedzi</th>
+          <th>Klucz</th>
+          <th>Wynik</th>
+          <th>Ocena</th>
+        </tr>
+        {students.map((student) => {
+          const score = student.answers.reduce((acc, answer, index) => {
+            const rowIndex = student.row - 1;
+            const correctAnswer = config.answerKey[rowIndex]?.[index];
+            return answer === correctAnswer ? acc + 1 : acc;
+          }, 0);
 
+          return (
+            <tr key={student.id}>
+              <td>{student.id}</td>
+              <td>{student.row}</td>
+              <td>{student.answers}</td>
+              <td>{config.answerKey[student.row-1]}</td>
+              <td>{score} / {config.numberOfQuestions}</td>
+            </tr>
+          );
+        })}
+      </table>
       <div style={{ marginTop: "1rem" }}>
         <button onClick={onBackToStudents}>← Wróć do uczniów</button>
         <button onClick={onBackToConfig} style={{ marginLeft: "1rem" }}>

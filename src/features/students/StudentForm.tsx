@@ -7,6 +7,7 @@ type Props = {
   students: Student[];
   setStudents: (students: Student[]) => void;
   onSubmitAll: (students: Student[]) => void;
+  onBackToConfig: () => void;
 };
 
 export const StudentForm: React.FC<Props> = ({
@@ -14,6 +15,7 @@ export const StudentForm: React.FC<Props> = ({
   numberOfRows,
   students,
   setStudents,
+  onBackToConfig,
   onSubmitAll,
 }) => {
   const [studentId, setStudentId] = useState("");
@@ -157,6 +159,11 @@ export const StudentForm: React.FC<Props> = ({
       </ul>
 
       <button onClick={handleSubmitAll}>Zatwierdź wszystkich</button>
+      <div style={{ marginTop: "1rem" }}>
+        <button onClick={onBackToConfig} style={{ marginLeft: "1rem" }}>
+          ← Zmień konfigurację testu
+        </button>
+      </div>
     </div>
   );
 };

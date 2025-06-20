@@ -21,21 +21,14 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
     if (config) {
       setNumberOfQuestions(config.numberOfQuestions);
       setNumberOfRows(config.numberOfRows || 1);
-      setAnswerKey(
-        config.answerKey.map((row) => row.join(","))
+
+      // Rozciągamy answerKey do liczby rzędów
+      const mergedAnswerKey = Array.from({ length: config.numberOfRows || 1 }, (_, i) =>
+        config.answerKey[i]?.join(",") || ""
       );
+      setAnswerKey(mergedAnswerKey);
     }
   }, [config]);
-
-  // Obsługa zmiany liczby rzędów
-  useEffect(() => {
-    setAnswerKey((prev) => {
-      const updated = [...prev];
-      while (updated.length < numberOfRows) updated.push("");
-      while (updated.length > numberOfRows) updated.pop();
-      return updated;
-    });
-  }, [numberOfRows]);
 
   const handleAnswerChange = (rowIndex: number, value: string) => {
     const updated = [...answerKey];

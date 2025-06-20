@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAppSelector} from "./hooks/useAppSelector"; 
-import { useAppDispatch} from "./hooks/useAppDispatch";// Twoje typed hooki
+import { useAppDispatch} from "./hooks/useAppDispatch";
 import { TestConfigForm } from "./features/testConfig/TestConfigForm";
 import { StudentForm } from "./features/students/StudentForm";
 import { Results } from "./components/Results";
@@ -44,6 +44,7 @@ const App: React.FC = () => {
           students={students}
           setStudents={(students) => dispatch(setStudents(students))}
           onSubmitAll={handleStudentsSubmit}
+          onBackToConfig={() => setStep("config")}
         />
       )}
 
