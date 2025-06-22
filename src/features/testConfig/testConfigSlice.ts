@@ -1,15 +1,19 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { GradeThreshold, TestConfig } from "../../types";
 
-export interface TestConfigState {
-  numberOfQuestions: number;
-  numberOfRows: number;
-  answerKey: string[][]; // jeden klucz odpowiedzi na każdy rząd
-}
 
-const initialState: TestConfigState = {
+const initialState: TestConfig = {
   numberOfQuestions: 0,
   numberOfRows: 1,
   answerKey: [],
+  gradeScale: [
+    { grade: "1", threshold: 0 },
+    { grade: "2", threshold: 50 },
+    { grade: "3", threshold: 60 },
+    { grade: "4", threshold: 75 },
+    { grade: "5", threshold: 90 },
+    { grade: "6", threshold: 95 },
+  ]
 };
 
 const testConfigSlice = createSlice({
@@ -22,16 +26,26 @@ const testConfigSlice = createSlice({
         numberOfQuestions: number;
         numberOfRows: number;
         answerKey: string[][];
+        gradeScale: GradeThreshold[];
       }>
     ) => {
       state.numberOfQuestions = action.payload.numberOfQuestions;
       state.numberOfRows = action.payload.numberOfRows;
       state.answerKey = action.payload.answerKey;
+      state.gradeScale = action.payload.gradeScale;
     },
     resetTestConfig: (state) => {
       state.numberOfQuestions = 0;
       state.numberOfRows = 1;
       state.answerKey = [];
+      state.gradeScale = [
+        { grade: "1", threshold: 0 },
+        { grade: "2", threshold: 50 },
+        { grade: "3", threshold: 60 },
+        { grade: "4", threshold: 75 },
+        { grade: "5", threshold: 90 },
+        { grade: "6", threshold: 95 },
+      ]
     },
   },
 });

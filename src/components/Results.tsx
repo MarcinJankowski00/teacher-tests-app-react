@@ -14,6 +14,18 @@ export const Results: React.FC<Props> = ({
   onBackToStudents,
   onBackToConfig,
 }) => {
+
+  const calculateGrade = (points: number) => {
+    const result = (points*100)/config.numberOfQuestions;
+    console.log(result)
+    for(var i= 0; i < config.gradeScale.length; i++)
+    {
+      if((result) >= config.gradeScale[i].threshold){
+        return config.gradeScale[i].grade;
+      }
+    }
+  };
+
   return (
     <div>
       <h2>Raport wyników</h2>
@@ -57,6 +69,7 @@ export const Results: React.FC<Props> = ({
               <td>{student.answers}</td>
               <td>{config.answerKey[student.row-1]}</td>
               <td>{score} / {config.numberOfQuestions}</td>
+              <td>{calculateGrade(score)}</td>
             </tr>
           );
         })}

@@ -9,6 +9,7 @@ import { setTestConfig } from "./features/testConfig/testConfigSlice";
 import {
   setStudents,
 } from "./features/students/studentsSlice";
+import type { TestConfig } from "./types";
 
 const App: React.FC = () => {
   const [step, setStep] = useState<"config" | "students" | "results">("config");
@@ -20,7 +21,7 @@ const App: React.FC = () => {
   const students = useAppSelector((state) => state.students.list);
 
   // Funkcja do zatwierdzania konfiguracji testu
- const handleConfigSubmit = (config: { numberOfQuestions: number; numberOfRows: number; answerKey: string[][] }) => {
+ const handleConfigSubmit = (config: TestConfig) => {
   dispatch(setTestConfig(config));
   setStep("students");
 };
