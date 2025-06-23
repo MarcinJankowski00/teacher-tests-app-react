@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import type { Student } from "../../types";
+import type { Student } from "../../../types";
 
 type Props = {
   numberOfQuestions: number;
@@ -7,7 +7,6 @@ type Props = {
   students: Student[];
   setStudents: (students: Student[]) => void;
   onSubmitAll: (students: Student[]) => void;
-  onBackToConfig: () => void;
 };
 
 export const StudentForm: React.FC<Props> = ({
@@ -15,7 +14,6 @@ export const StudentForm: React.FC<Props> = ({
   numberOfRows,
   students,
   setStudents,
-  onBackToConfig,
   onSubmitAll,
 }) => {
   const [studentId, setStudentId] = useState("");
@@ -166,11 +164,6 @@ export const StudentForm: React.FC<Props> = ({
       </table>
 
       <button onClick={handleSubmitAll}>Zatwierdź wszystkich</button>
-      <div style={{ marginTop: "1rem" }}>
-        <button onClick={onBackToConfig} style={{ marginLeft: "1rem" }}>
-          ← Zmień konfigurację testu
-        </button>
-      </div>
     </div>
   );
 };

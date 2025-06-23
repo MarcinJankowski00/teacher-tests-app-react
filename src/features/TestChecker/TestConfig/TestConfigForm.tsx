@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { setTestConfig } from "../../features/testConfig/testConfigSlice";
-import type { TestConfig, GradeThreshold } from "../../types";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { setTestConfig } from "./testConfigSlice";
+import type { TestConfig, GradeThreshold } from "../../../types";
 
 type Props = {
   onSubmit: (config: TestConfig) => void;

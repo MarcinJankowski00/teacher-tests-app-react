@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import testConfigReducer from "../features/testConfig/testConfigSlice";
-import studentsReducer from "../features/students/studentsSlice";
+import testConfigReducer from "../features/TestChecker/TestConfig/testConfigSlice";
+import studentsReducer from "../features/TestChecker/Students/studentsSlice";
 
 export const store = configureStore({
   reducer: {
