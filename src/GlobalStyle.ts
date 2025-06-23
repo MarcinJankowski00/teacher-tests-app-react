@@ -25,12 +25,15 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  body {
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
-  }
+    body {
+        font-family: 'Rubik', sans-serif;
+        font-size: 23px;
+        background-color: ${({ theme }) => theme.color.gallery};
+
+        @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+            font-size: 18px;
+        }
+    }
 
   a {
     font-weight: 500;
@@ -43,7 +46,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: 3.2em;
+    font-size: 60px;
     line-height: 1.1;
   }
 

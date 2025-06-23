@@ -143,7 +143,11 @@ export const StudentForm: React.FC<Props> = ({
         </button>
       )}
 
-      <h4>Dodani uczniowie ({students.length}):</h4>
+      <button onClick={handleSubmitAll} style={{ marginLeft: "1rem" }}>
+        Zatwierdź wszystkich
+      </button>
+
+      <h3>Dodani uczniowie ({students.length}):</h3>
       <table>
         <tr>
           <th>ID ucznia</th>
@@ -153,17 +157,15 @@ export const StudentForm: React.FC<Props> = ({
           <th></th>
         </tr>
         {students.map((s, i) => (
-            <tr key={s.id}>
-              <td><strong>{s.id}</strong></td>
-              <td>{s.row}</td>
-              <td>{s.answers.join(", ")}</td>
-              <td><button onClick={() => handleEdit(i)}>Edytuj</button></td>
-              <td><button onClick={() => handleDelete(i)}>Usuń</button></td>
-            </tr>
+          <tr key={s.id}>
+            <td><strong>{s.id}</strong></td>
+            <td>{s.row}</td>
+            <td>{s.answers.join(", ")}</td>
+            <td><button onClick={() => handleEdit(i)}>Edytuj</button></td>
+            <td><button onClick={() => handleDelete(i)}>Usuń</button></td>
+          </tr>
         ))}
       </table>
-
-      <button onClick={handleSubmitAll}>Zatwierdź wszystkich</button>
     </div>
   );
 };

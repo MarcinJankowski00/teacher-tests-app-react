@@ -33,7 +33,7 @@ const TestChecker: React.FC = () => {
 
     return (
         <>
-            <div style={{ padding: "2rem" }}>
+            <div>
                 <h1>Aplikacja do sprawdzania testów</h1>
 
                 {step === "config" &&

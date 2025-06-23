@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        display: grid;
+    display: flex;
+    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {    
         grid-template-columns: 1fr;
         grid-gap: 10px
     }

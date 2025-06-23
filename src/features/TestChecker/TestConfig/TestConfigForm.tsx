@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { setTestConfig } from "./testConfigSlice";
 import type { TestConfig, GradeThreshold } from "../../../types";
+import { Button, Form, Input, Label } from "./styled";
 
 type Props = {
   onSubmit: (config: TestConfig) => void;
@@ -93,84 +94,89 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Liczba pytań:
-        <input
-          type="number"
-          min={1}
-          value={numberOfQuestions}
-          onChange={(e) => setNumberOfQuestions(Number(e.target.value))}
-        />
-      </label>
-      <br />
-
-      <label>
-        Liczba rzędów:
-        <input
-          type="number"
-          min={1}
-          value={numberOfRows}
-          onChange={(e) => setNumberOfRows(Number(e.target.value))}
-        />
-      </label>
-      <br />
-
-      {Array.from({ length: numberOfRows }, (_, i) => (
-        <div key={i}>
+    <Form onSubmit={handleSubmit}>
+      <div>
+        <h3>Test:</h3>
+        <Label>
           <label>
-            Klucz odpowiedzi – rząd {i + 1}:
-            <input
-              type="text"
-              value={answerKey[i] || ""}
-              onChange={(e) => handleAnswerChange(i, e.target.value)}
+            Liczba pytań:
+            <Input
+              type="number"
+              min={1}
+              value={numberOfQuestions}
+              onChange={(e) => setNumberOfQuestions(Number(e.target.value))}
             />
           </label>
-        </div>
-      ))}
+        </Label>
+        <Label>
+          <label>
+            Liczba rzędów:
+            <Input
+              type="number"
+              min={1}
+              value={numberOfRows}
+              onChange={(e) => setNumberOfRows(Number(e.target.value))}
+            />
+          </label>
+        </Label>
 
-      <br />
-      <label>
-        Ile ocen w skali?
-        <input
-          type="number"
-          min={2}
-          max={10}
-          value={gradeScaleSize}
-          onChange={(e) => setGradeScaleSize(Number(e.target.value))}
-        />
-      </label>
+        {Array.from({ length: numberOfRows }, (_, i) => (
+          <Label key={i}>
+            <label>
+              Klucz odpowiedzi – rząd {i + 1}:
+              <Input
+                type="text"
+                value={answerKey[i] || ""}
+                long={true}
+                onChange={(e) => handleAnswerChange(i, e.target.value)}
+              />
+            </label>
+          </Label>
+        ))}
 
-      <div style={{ marginTop: "1rem" }}>
-        <h4>Skala ocen:</h4>
+        <br />
+      </div>
+      <div>
+        <h3>Skala ocen:</h3>
+        <Label>
+          <label>
+            Ile ocen w skali?
+            <Input
+              type="number"
+              min={2}
+              max={10}
+              value={gradeScaleSize}
+              onChange={(e) => setGradeScaleSize(Number(e.target.value))}
+            />
+          </label>
+        </Label>
         {gradeScale.map((grade, i) => (
           <div key={i} style={{ marginBottom: "0.5rem" }}>
-            <label>
-              Ocena #{i + 1}:{" "}
-              <input
-                type="text"
-                placeholder="np. 5 lub A"
-                value={grade.grade}
-                onChange={(e) => handleGradeChange(i, "grade", e.target.value)}
-                style={{ width: "60px", marginRight: "1rem" }}
-              />
-              od:{" "}
-              <input
-                type="number"
-                min={0}
-                max={100}
-                value={grade.threshold}
-                onChange={(e) => handleGradeChange(i, "threshold", e.target.value)}
-                style={{ width: "60px" }}
-              />{" "}
-              %
-            </label>
+            <Label>
+              <label>
+                Ocena #{i + 1}:{" "}
+                <Input
+                  type="text"
+                  placeholder="np. 5 lub A"
+                  value={grade.grade}
+                  onChange={(e) => handleGradeChange(i, "grade", e.target.value)}
+                />
+                od:{" "}
+                <Input
+                  type="number"
+                  min={0}
+                  max={100}
+                  value={grade.threshold}
+                  onChange={(e) => handleGradeChange(i, "threshold", e.target.value)}
+                />{" "}
+                %
+              </label>
+            </Label>
           </div>
         ))}
       </div>
-
       <br />
-      <button type="submit">Zatwierdź</button>
-    </form>
+      <Button type="submit">Zatwierdź</Button>
+    </Form >
   );
 };

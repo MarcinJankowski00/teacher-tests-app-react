@@ -14,9 +14,9 @@ export const NavButtons: React.FC<Props> = ({
 }) => {
     return (
         <Wrapper>
-            <Button onClick={onBackToStudents} visible={step==="students" ? false : true }>← Wróć do uczniów</Button>
+            <Button onClick={onBackToStudents} visible={step==="students" ? false : true }>Wróć do uczniów</Button>
             <Button onClick={onBackToConfig} visible={true}>
-                ← Zmień konfigurację testu
+                Zmień konfigurację testu
             </Button>
         </Wrapper>
     );
