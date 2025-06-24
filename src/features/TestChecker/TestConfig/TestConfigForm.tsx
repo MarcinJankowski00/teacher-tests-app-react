@@ -3,7 +3,7 @@ import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { setTestConfig } from "./testConfigSlice";
 import type { TestConfig, GradeThreshold } from "../../../types";
-import { Button, Form, Input, Label } from "./styled";
+import { Button, Div, Form, Input, Label } from "../styled";
 
 type Props = {
   onSubmit: (config: TestConfig) => void;
@@ -95,35 +95,38 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <div>
+      <Div>
         <h3>Test:</h3>
-        <Label>
-          <label>
+        <Label short={true}>
+          <label htmlFor="rows">
             Liczba pytań:
-            <Input
-              type="number"
-              min={1}
-              value={numberOfQuestions}
-              onChange={(e) => setNumberOfQuestions(Number(e.target.value))}
-            />
           </label>
+          <Input
+            id="rows"
+            type="number"
+            min={1}
+            value={numberOfQuestions}
+            onChange={(e) => setNumberOfQuestions(Number(e.target.value))}
+          />
         </Label>
-        <Label>
-          <label>
+        <Label short={true}>
+          <label htmlFor="rows">
             Liczba rzędów:
-            <Input
-              type="number"
-              min={1}
-              value={numberOfRows}
-              onChange={(e) => setNumberOfRows(Number(e.target.value))}
-            />
           </label>
+          <Input
+            id="rows"
+            type="number"
+            min={1}
+            value={numberOfRows}
+            onChange={(e) => setNumberOfRows(Number(e.target.value))}
+          />
         </Label>
 
         {Array.from({ length: numberOfRows }, (_, i) => (
           <Label key={i}>
             <label>
               Klucz odpowiedzi – rząd {i + 1}:
+              <br />
               <Input
                 type="text"
                 value={answerKey[i] || ""}
@@ -135,8 +138,8 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
         ))}
 
         <br />
-      </div>
-      <div>
+      </Div>
+      <Div>
         <h3>Skala ocen:</h3>
         <Label>
           <label>
@@ -174,7 +177,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
             </Label>
           </div>
         ))}
-      </div>
+      </Div>
       <br />
       <Button type="submit">Zatwierdź</Button>
     </Form >

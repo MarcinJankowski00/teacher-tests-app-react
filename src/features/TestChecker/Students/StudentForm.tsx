@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { Student } from "../../../types";
+import { Button, Cell, Div, Form, FormDiv, Input, Label, Table } from "../styled";
 
 type Props = {
   numberOfQuestions: number;
@@ -91,81 +92,90 @@ export const StudentForm: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <h3>{editingIndex !== null ? "Edytuj ucznia" : "Dodaj ucznia"}</h3>
+    <FormDiv>
+      <Div>
+        <h3>{editingIndex !== null ? "Edytuj ucznia" : "Dodaj ucznia"}</h3>
+        <Label>
+          <label htmlFor="rows">
+            ID ucznia:
+          </label>
+          <Input
+            id="rows"
+            long={true}
+            type="text"
+            value={studentId}
+            onChange={(e) => setStudentId(e.target.value)}
+          />
+        </Label>
+        <Label>
+          <label htmlFor="rows">
+            Odpowiedzi (np. a,b,c):
+          </label>
+          <Input
+            id="rows"
+            long={true}
+            type="text"
+            value={studentAnswers}
+            onChange={(e) => setStudentAnswers(e.target.value)}
+          />
+        </Label>
+        <Label>
+          <label>
+            Rząd:{" "}
+            <select
+              value={studentRow}
+              onChange={(e) => setStudentRow(Number(e.target.value))}
+            >
+              {Array.from({ length: numberOfRows }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+          </label>
+        </Label>
 
-      <label>
-        ID ucznia:
-        <input
-          type="text"
-          value={studentId}
-          onChange={(e) => setStudentId(e.target.value)}
-        />
-      </label>
-      <br />
-
-      <label>
-        Odpowiedzi (np. a,b,c,...):
-        <input
-          type="text"
-          value={studentAnswers}
-          onChange={(e) => setStudentAnswers(e.target.value)}
-        />
-      </label>
-      <br />
-
-      <label>
-        Rząd:
-        <select
-          value={studentRow}
-          onChange={(e) => setStudentRow(Number(e.target.value))}
-        >
-          {Array.from({ length: numberOfRows }, (_, i) => (
-            <option key={i + 1} value={i + 1}>
-              {i + 1}
-            </option>
-          ))}
-        </select>
-      </label>
-      <br />
-
-      <button type="button" onClick={handleAddOrUpdateStudent}>
-        {editingIndex !== null ? "Zapisz zmiany" : "Dodaj ucznia"}
-      </button>
-
-      {editingIndex !== null && (
-        <button
-          type="button"
-          onClick={() => setEditingIndex(null)}
-          style={{ marginLeft: "1rem" }}
-        >
-          Anuluj edycję
+        <button type="button" onClick={handleAddOrUpdateStudent}>
+          {editingIndex !== null ? "Zapisz zmiany" : "Dodaj ucznia"}
         </button>
-      )}
+        
 
-      <button onClick={handleSubmitAll} style={{ marginLeft: "1rem" }}>
-        Zatwierdź wszystkich
-      </button>
-
-      <h3>Dodani uczniowie ({students.length}):</h3>
-      <table>
-        <tr>
-          <th>ID ucznia</th>
-          <th>Rząd</th>
-          <th>Odpowiedzi</th>
-          <th></th>
-          <th></th>
-        </tr>
-        {students.map((s, i) => (
-          <tr key={s.id}>
-            <td><strong>{s.id}</strong></td>
-            <td>{s.row}</td>
-            <td>{s.answers.join(", ")}</td>
-            <td><button onClick={() => handleEdit(i)}>Edytuj</button></td>
-            <td><button onClick={() => handleDelete(i)}>Usuń</button></td>
+        {editingIndex !== null && (
+          <button
+            type="button"
+            onClick={() => setEditingIndex(null)}
+            style={{ marginLeft: "1rem" }}
+          >
+            Anuluj edycję
+          </button>
+        )}
+        <br />
+        <br />
+      </Div>
+      <Div>
+        <h3>Dodani uczniowie ({students.length}):</h3>
+        <Table>
+          <tr>
+            <th>ID ucznia</th>
+            <th>Rząd</th>
+            <th>Odpowiedzi</th>
+            <th></th>
+            <th></th>
           </tr>
-        ))}
-      </table>
-    </div>
+          {students.map((s, i) => (
+            <tr key={s.id}>
+              <Cell><strong>{s.id}</strong></Cell>
+              <Cell>{s.row}</Cell>
+              <Cell>{s.answers.join(", ")}</Cell>
+              <Cell><button onClick={() => handleEdit(i)}>Edytuj</button></Cell>
+              <Cell><button onClick={() => handleDelete(i)}>Usuń</button></Cell>
+            </tr>
+          ))}
+        </Table>
+      </Div>
+      <Button onClick={handleSubmitAll} style={{ marginLeft: "1rem" }}>
+        Zatwierdź wszystkich
+      </Button>
+    </FormDiv>
   );
 };

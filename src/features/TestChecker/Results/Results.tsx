@@ -1,5 +1,6 @@
 import React from "react";
 import type { Student, TestConfig } from "../../../types";
+import { Cell, Table } from "../styled";
 
 type Props = {
   students: Student[];
@@ -24,7 +25,7 @@ export const Results: React.FC<Props> = ({
 
   return (
     <div>
-      <table>
+      <Table result={true}>
         <tr>
           <th>ID ucznia</th>
           <th>Rząd</th>
@@ -42,16 +43,16 @@ export const Results: React.FC<Props> = ({
 
           return (
             <tr key={student.id}>
-              <td>{student.id}</td>
-              <td>{student.row}</td>
-              <td>{student.answers}</td>
-              <td>{config.answerKey[student.row-1]}</td>
-              <td>{score} / {config.numberOfQuestions}</td>
-              <td>{calculateGrade(score)}</td>
+              <Cell>{student.id}</Cell>
+              <Cell>{student.row}</Cell>
+              <Cell>{student.answers}</Cell>
+              <Cell>{config.answerKey[student.row-1]}</Cell>
+              <Cell>{score} / {config.numberOfQuestions}</Cell>
+              <Cell>{calculateGrade(score)}</Cell>
             </tr>
           );
         })}
-      </table>
+      </Table>
     </div>
   );
 };
