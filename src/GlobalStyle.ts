@@ -33,6 +33,10 @@ const GlobalStyle = createGlobalStyle`
         @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
             font-size: 18px;
         }
+
+        @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
+          font-size: 13px;
+        }
     }
 
   a {
@@ -48,6 +52,12 @@ const GlobalStyle = createGlobalStyle`
   h1 {
     font-size: 60px;
     line-height: 1.1;
+      @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+        font-size: 40px;
+      }
+      @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
+        font-size: 24px;
+      }
   }
 
   button {

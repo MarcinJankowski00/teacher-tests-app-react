@@ -22,6 +22,12 @@ export const Header = styled.div`
 
 export const Title = styled.h2`
     margin: 0;
+    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
+        font-size: 25px;
+    }
+    @media (max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
+        font-size: 18px;
+    }
 `;
 
 export const Content = styled.div`

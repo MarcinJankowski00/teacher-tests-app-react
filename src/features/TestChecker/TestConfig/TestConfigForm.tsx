@@ -3,7 +3,7 @@ import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { setTestConfig } from "./testConfigSlice";
 import type { TestConfig, GradeThreshold } from "../../../types";
-import { Button, Div, Form, Input, Label } from "../styled";
+import { Button, Div, Form, Input, KeyInput, Label, Wrapper } from "../styled";
 
 type Props = {
   onSubmit: (config: TestConfig) => void;
@@ -95,6 +95,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <Wrapper>
       <Div>
         <h3>Test:</h3>
         <Label short={true}>
@@ -124,19 +125,19 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
 
         {Array.from({ length: numberOfRows }, (_, i) => (
           <Label key={i}>
-            <label>
+            <label htmlFor="rows">
               Klucz odpowiedzi – rząd {i + 1}:
               <br />
-              <Input
-                type="text"
-                value={answerKey[i] || ""}
-                long={true}
-                onChange={(e) => handleAnswerChange(i, e.target.value)}
-              />
             </label>
+            <KeyInput
+              id="rows"
+              type="text"
+              value={answerKey[i] || ""}
+              placeholder="np. a,b,c"
+              onChange={(e) => handleAnswerChange(i, e.target.value)}
+            />
           </Label>
         ))}
-
         <br />
       </Div>
       <Div>
@@ -178,6 +179,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
           </div>
         ))}
       </Div>
+      </Wrapper>
       <br />
       <Button type="submit">Zatwierdź</Button>
     </Form >

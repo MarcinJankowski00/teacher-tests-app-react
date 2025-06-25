@@ -1,6 +1,6 @@
 import React from "react";
 import type { Student, TestConfig } from "../../../types";
-import { Cell, Table } from "../styled";
+import { Cell, Table, TableContainer } from "../styled";
 
 type Props = {
   students: Student[];
@@ -14,7 +14,6 @@ export const Results: React.FC<Props> = ({
 
   const calculateGrade = (points: number) => {
     const result = (points*100)/config.numberOfQuestions;
-    console.log(result)
     for(var i= 0; i < config.gradeScale.length; i++)
     {
       if((result) >= config.gradeScale[i].threshold){
@@ -24,8 +23,8 @@ export const Results: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <Table result={true}>
+    <TableContainer>
+      <Table result={true} visible={true}>
         <tr>
           <th>ID ucznia</th>
           <th>Rząd</th>
@@ -53,6 +52,6 @@ export const Results: React.FC<Props> = ({
           );
         })}
       </Table>
-    </div>
+    </TableContainer>
   );
 };

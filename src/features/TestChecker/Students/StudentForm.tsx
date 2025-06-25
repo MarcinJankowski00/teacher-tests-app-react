@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import type { Student } from "../../../types";
-import { Button, Cell, Div, Form, FormDiv, Input, Label, Table } from "../styled";
+import DeleteIcon from "../../../assets/DeleteIcon.svg";
+import EditIcon from "../../../assets/EditIcon.svg";
+import { Button, Buttons, Cell, Div, FormDiv, Img, Input, Label, SecondaryButton, StudentLabel, Table, TableContainer } from "../styled";
 
 type Props = {
   numberOfQuestions: number;
@@ -95,30 +97,32 @@ export const StudentForm: React.FC<Props> = ({
     <FormDiv>
       <Div>
         <h3>{editingIndex !== null ? "Edytuj ucznia" : "Dodaj ucznia"}</h3>
-        <Label>
+        <StudentLabel>
           <label htmlFor="rows">
             ID ucznia:
           </label>
           <Input
             id="rows"
             long={true}
+            placeholder="np. imię lub indeks"
             type="text"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
           />
-        </Label>
-        <Label>
+        </StudentLabel>
+        <StudentLabel>
           <label htmlFor="rows">
-            Odpowiedzi (np. a,b,c):
+            Odpowiedzi:
           </label>
           <Input
             id="rows"
             long={true}
+            placeholder="np. a,b,c"
             type="text"
             value={studentAnswers}
             onChange={(e) => setStudentAnswers(e.target.value)}
           />
-        </Label>
+        </StudentLabel>
         <Label>
           <label>
             Rząd:{" "}
@@ -134,46 +138,44 @@ export const StudentForm: React.FC<Props> = ({
             </select>
           </label>
         </Label>
-
-        <button type="button" onClick={handleAddOrUpdateStudent}>
+        <Buttons>
+        <SecondaryButton type="button" onClick={handleAddOrUpdateStudent}>
           {editingIndex !== null ? "Zapisz zmiany" : "Dodaj ucznia"}
-        </button>
-        
-
+        </SecondaryButton>
         {editingIndex !== null && (
-          <button
+          <SecondaryButton
             type="button"
             onClick={() => setEditingIndex(null)}
-            style={{ marginLeft: "1rem" }}
           >
             Anuluj edycję
-          </button>
+          </SecondaryButton>
         )}
-        <br />
-        <br />
+        </Buttons>
       </Div>
       <Div>
         <h3>Dodani uczniowie ({students.length}):</h3>
-        <Table>
-          <tr>
-            <th>ID ucznia</th>
-            <th>Rząd</th>
-            <th>Odpowiedzi</th>
-            <th></th>
-            <th></th>
-          </tr>
-          {students.map((s, i) => (
-            <tr key={s.id}>
-              <Cell><strong>{s.id}</strong></Cell>
-              <Cell>{s.row}</Cell>
-              <Cell>{s.answers.join(", ")}</Cell>
-              <Cell><button onClick={() => handleEdit(i)}>Edytuj</button></Cell>
-              <Cell><button onClick={() => handleDelete(i)}>Usuń</button></Cell>
+        <TableContainer>
+          <Table visible={students.length === 0 ? false : true}>
+            <tr>
+              <th>ID ucznia</th>
+              <th>Rząd</th>
+              <th>Odpowiedzi</th>
+              <th></th>
+              <th></th>
             </tr>
-          ))}
-        </Table>
+            {students.map((s, i) => (
+              <tr key={s.id}>
+                <Cell><strong>{s.id}</strong></Cell>
+                <Cell>{s.row}</Cell>
+                <Cell>{s.answers.join(", ")}</Cell>
+                <Cell><button onClick={() => handleEdit(i)}><Img src={EditIcon} alt="Edit"/></button></Cell>
+                <Cell><button onClick={() => handleDelete(i)}><Img src={DeleteIcon} alt="Delete"/></button></Cell>
+              </tr>
+            ))}
+          </Table>
+        </TableContainer>
       </Div>
-      <Button onClick={handleSubmitAll} style={{ marginLeft: "1rem" }}>
+      <Button onClick={handleSubmitAll}>
         Zatwierdź wszystkich
       </Button>
     </FormDiv>
