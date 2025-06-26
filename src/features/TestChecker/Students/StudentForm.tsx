@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import type { Student } from "../../../types";
 import DeleteIcon from "../../../assets/DeleteIcon.svg";
 import EditIcon from "../../../assets/EditIcon.svg";
-import { Button, Buttons, Cell, Div, FormDiv, IconButton, Img, Input, Label, SecondaryButton, StudentLabel, Table, TableContainer } from "../styled";
+import { Button, Buttons, Div, FormDiv, IconButton, Img, Input, Label, SecondaryButton, StudentLabel, List, TableContainer, Item } from "../styled";
 
 type Props = {
   numberOfQuestions: number;
@@ -155,24 +155,24 @@ export const StudentForm: React.FC<Props> = ({
       <Div>
         <h3>Dodani uczniowie ({students.length}):</h3>
         <TableContainer>
-          <Table visible={students.length === 0 ? false : true}>
-            <tr>
-              <th>ID ucznia</th>
-              <th>Rząd</th>
-              <th>Odpowiedzi</th>
-              <th></th>
-              <th></th>
-            </tr>
+          <List visible={students.length === 0 ? false : true}>
+            <Item>
+              <span>ID ucznia</span>
+              <span>Rząd</span>
+              <span>Odpowiedzi</span>
+              <span></span>
+              <span></span>
+            </Item>
             {students.map((s, i) => (
-              <tr key={s.id}>
-                <Cell><strong>{s.id}</strong></Cell>
-                <Cell>{s.row}</Cell>
-                <Cell>{s.answers.join(", ")}</Cell>
-                <Cell><IconButton onClick={() => handleEdit(i)}><Img src={EditIcon} alt="Edit"/></IconButton></Cell>
-                <Cell><IconButton onClick={() => handleDelete(i)}><Img src={DeleteIcon} alt="Delete"/></IconButton></Cell>
-              </tr>
+              <Item key={s.id}>
+                <span><strong>{s.id}</strong></span>
+                <span>{s.row}</span>
+                <span>{s.answers.join(", ")}</span>
+                <IconButton onClick={() => handleEdit(i)}><Img src={EditIcon} alt="Edit"/></IconButton>
+                <IconButton onClick={() => handleDelete(i)}><Img src={DeleteIcon} alt="Delete"/></IconButton>
+              </Item>
             ))}
-          </Table>
+          </List>
         </TableContainer>
       </Div>
       <Button onClick={handleSubmitAll}>

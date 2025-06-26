@@ -54,7 +54,7 @@ export const Input = styled.input<{ long?: boolean }>`
     border-radius: 5px;
     border-width: 1px;
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        max-width: ${({ long }) => (long ? "70%" : "30px")};
+        max-width: ${({ long }) => (long ? "60%" : "30px")};
     }
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
         max-width: ${({ long }) => (long ? "60%" : "25px")};
@@ -124,6 +124,23 @@ export const Img = styled.img`
 export const IconButton = styled.button`
     width: 40px;
     padding: 6px;
+`;
+
+export const List = styled.ul<{ visible?: boolean }>`
+    display: ${({ visible }) => (visible ? "table" : "none")};
+    list-style: none;
+    width: 100%;
+    padding: 0;
+`;
+
+export const Item = styled.li`
+    display: grid;
+    grid-template-columns: 3fr 1fr 5fr 50px 50px;
+    text-align: center;
+    align-items: center;
+    grid-gap: 10px;
+    border-bottom: 2px solid ${({ theme }) => theme.color.alto};
+    padding: 10px;
 `;
 
 
