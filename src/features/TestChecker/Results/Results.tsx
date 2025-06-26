@@ -1,6 +1,7 @@
 import React from "react";
 import type { Student, TestConfig } from "../../../types";
 import { Cell, Table, TableContainer } from "../styled";
+import { exportToPDF } from "./ExportToPDF";
 
 type Props = {
   students: Student[];
@@ -11,6 +12,22 @@ export const Results: React.FC<Props> = ({
   students,
   config,
 }) => {
+
+    const generateResults = () => {
+    return students.map((student) => {
+      const score = student.answers.reduce((acc, answer, index) => {
+        const correct = config.answerKey[student.row - 1]?.[index];
+        return answer === correct ? acc + 1 : acc;
+      }, 0);
+
+      return {
+        name: student.id,
+        row: student.row,
+        score: `${score} / ${config.numberOfQuestions}`,
+        grade: calculateGrade(score),
+      };
+    });
+  };
 
   const calculateGrade = (points: number) => {
     const result = (points*100)/config.numberOfQuestions;
@@ -23,6 +40,7 @@ export const Results: React.FC<Props> = ({
   };
 
   return (
+    <>
     <TableContainer>
       <Table result={true} visible={true}>
         <tr>
@@ -53,5 +71,7 @@ export const Results: React.FC<Props> = ({
         })}
       </Table>
     </TableContainer>
+    <button onClick={() => exportToPDF(generateResults())}>Eksportuj do PDF</button>
+    </>
   );
 };
