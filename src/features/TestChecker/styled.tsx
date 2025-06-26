@@ -6,13 +6,8 @@ export const Form = styled.form`
 `;
 
 export const FormDiv = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        display: flex;
-        flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
 `;
 
 export const Wrapper = styled.div`
@@ -50,23 +45,19 @@ export const StudentLabel = styled.div<{ short?: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        max-width: 300px;
-    }
-
 `;
 
 export const Input = styled.input<{ long?: boolean }>`
     max-width: ${({ long }) => (long ? "none" : "50px")};
-    width: 50%;
+    width: ${({ long }) => (long ? "85%" : "50%")};
     margin: ${({ long }) => (long ? "0" : "0 5px")};
     border-radius: 5px;
     border-width: 1px;
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        max-width: ${({ long }) => (long ? "none" : "30px")};
+        max-width: ${({ long }) => (long ? "70%" : "30px")};
     }
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
-        max-width: ${({ long }) => (long ? "none" : "25px")};
+        max-width: ${({ long }) => (long ? "60%" : "25px")};
     }
 `;
 
@@ -127,7 +118,12 @@ export const Cell = styled.td<{ result?: boolean }>`
 `;
 
 export const Img = styled.img`
-    width: 30px;
+    width: 20px;
+`;
+
+export const IconButton = styled.button`
+    width: 40px;
+    padding: 6px;
 `;
 
 

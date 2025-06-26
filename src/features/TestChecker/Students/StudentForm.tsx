@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import type { Student } from "../../../types";
 import DeleteIcon from "../../../assets/DeleteIcon.svg";
 import EditIcon from "../../../assets/EditIcon.svg";
-import { Button, Buttons, Cell, Div, FormDiv, Img, Input, Label, SecondaryButton, StudentLabel, Table, TableContainer } from "../styled";
+import { Button, Buttons, Cell, Div, FormDiv, IconButton, Img, Input, Label, SecondaryButton, StudentLabel, Table, TableContainer } from "../styled";
 
 type Props = {
   numberOfQuestions: number;
@@ -168,8 +168,8 @@ export const StudentForm: React.FC<Props> = ({
                 <Cell><strong>{s.id}</strong></Cell>
                 <Cell>{s.row}</Cell>
                 <Cell>{s.answers.join(", ")}</Cell>
-                <Cell><button onClick={() => handleEdit(i)}><Img src={EditIcon} alt="Edit"/></button></Cell>
-                <Cell><button onClick={() => handleDelete(i)}><Img src={DeleteIcon} alt="Delete"/></button></Cell>
+                <Cell><IconButton onClick={() => handleEdit(i)}><Img src={EditIcon} alt="Edit"/></IconButton></Cell>
+                <Cell><IconButton onClick={() => handleDelete(i)}><Img src={DeleteIcon} alt="Delete"/></IconButton></Cell>
               </tr>
             ))}
           </Table>
