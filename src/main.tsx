@@ -4,7 +4,7 @@ import App from './App.tsx';
 import { ThemeProvider } from "styled-components";
 import { theme } from './theme';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './store';
 import GlobalStyle from "./GlobalStyle";
 
 createRoot(document.getElementById('root')!).render(

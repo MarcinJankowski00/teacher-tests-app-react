@@ -1,20 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { GradeThreshold, TestConfig } from "../../../types";
+import { getConfigFromLocalStorage } from "../testCheckerLocalStorage";
 
-
-const initialState: TestConfig = {
-  numberOfQuestions: 0,
-  numberOfRows: 1,
-  answerKey: [],
-  gradeScale: [
-    { grade: "1", threshold: 0 },
-    { grade: "2", threshold: 30 },
-    { grade: "3", threshold: 50 },
-    { grade: "4", threshold: 75 },
-    { grade: "5", threshold: 85 },
-    { grade: "6", threshold: 95 },
-  ]
-};
+const initialState: TestConfig = getConfigFromLocalStorage();
 
 const testConfigSlice = createSlice({
   name: "testConfig",

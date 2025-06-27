@@ -1,13 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Student } from "../../../types";
+import type { Student, StudentsState } from "../../../types";
+import { getStudentsFromLocalStorage } from "../testCheckerLocalStorage";
 
-type StudentsState = {
-  list: Student[];
-};
-
-const initialState: StudentsState = {
-  list: [],
-};
+const initialState: StudentsState = getStudentsFromLocalStorage();
 
 const studentsSlice = createSlice({
   name: "students",
