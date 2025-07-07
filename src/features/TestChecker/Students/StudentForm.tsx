@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 type Props = {
   numberOfQuestions: number;
-  numberOfRows: number; // <-- nowy props
+  numberOfRows: number;
   students: Student[];
   setStudents: (students: Student[]) => void;
   onSubmitAll: (students: Student[]) => void;
@@ -23,7 +23,7 @@ export const StudentForm: React.FC<Props> = ({
   const { t } = useTranslation();
   const [studentId, setStudentId] = useState("");
   const [studentAnswers, setStudentAnswers] = useState("");
-  const [studentRow, setStudentRow] = useState(1); // domyślnie rząd 1
+  const [studentRow, setStudentRow] = useState(1);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   useEffect(() => {

@@ -7,7 +7,6 @@ import type { RootState } from "../../store";
 import type { TestConfig } from "../../types";
 import type { Student } from "../../types";
 
-// Selectory
 const selectConfig = (state: RootState): TestConfig => state.testConfig;
 const selectStudents = (state: RootState): Student[] => state.students.list;
 

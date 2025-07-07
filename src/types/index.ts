@@ -1,8 +1,8 @@
 
 export type TestConfig = {
   numberOfQuestions: number;
-  numberOfRows: number; // <-- nowy
-  answerKey: string[][]; // <-- jeden klucz odpowiedzi na rząd
+  numberOfRows: number;
+  answerKey: string[][];
   gradeScale: GradeThreshold[];
 };
 

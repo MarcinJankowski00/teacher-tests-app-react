@@ -16,17 +16,14 @@ const TestChecker: React.FC = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
-    // Pobieramy z store
     const testConfig = useAppSelector((state) => state.testConfig);
     const students = useAppSelector((state) => state.students.list);
 
-    // Funkcja do zatwierdzania konfiguracji testu
     const handleConfigSubmit = (config: TestConfig) => {
         dispatch(setTestConfig(config));
         setStep("students");
     };
 
-    // Funkcja do zatwierdzania listy uczniów i przejścia do wyników
     const handleStudentsSubmit = (studentList: typeof students) => {
         dispatch(setStudents(studentList));
         setStep("results");

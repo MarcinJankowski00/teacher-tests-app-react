@@ -19,10 +19,9 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
   const [numberOfRows, setNumberOfRows] = useState(1);
   const [answerKey, setAnswerKey] = useState<string[]>([""]);
 
-  const [gradeScaleSize, setGradeScaleSize] = useState(6); // domyślnie 5 ocen
+  const [gradeScaleSize, setGradeScaleSize] = useState(6);
   const [gradeScale, setGradeScale] = useState<GradeThreshold[]>([]);
 
-  // Wczytaj dane z Reduxa jeśli istnieją
   useEffect(() => {
     if (config) {
       setNumberOfQuestions(config.numberOfQuestions);
@@ -39,7 +38,6 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
     }
   }, [config]);
 
-  // Dynamicznie dopasuj skalę ocen
   useEffect(() => {
     setGradeScale((prev) => {
       const updated = [...prev];
@@ -82,7 +80,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
       parsedAnswerKey.push(answers);
     }
 
-    const sortedGradeScale = [...gradeScale].sort((a, b) => b.threshold - a.threshold); // od najwyższych progów
+    const sortedGradeScale = [...gradeScale].sort((a, b) => b.threshold - a.threshold);
 
     const finalConfig: TestConfig = {
       numberOfQuestions,
