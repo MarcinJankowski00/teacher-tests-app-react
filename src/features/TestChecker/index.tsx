@@ -9,10 +9,11 @@ import { setStudents } from "./Students/studentsSlice";
 import type { TestConfig } from "../../types";
 import Section from "../../common/Section";
 import NavButtons from "./NavButtons";
+import { useTranslation } from "react-i18next";
 
 const TestChecker: React.FC = () => {
     const [step, setStep] = useState<"config" | "students" | "results">("config");
-
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
     // Pobieramy z store
@@ -34,17 +35,16 @@ const TestChecker: React.FC = () => {
     return (
         <>
             <div>
-                <h1>Aplikacja do sprawdzania testów</h1>
-
+                <h1>{t("appTitle")}</h1>
                 {step === "config" &&
-                    <Section title="Konfiguracja testu">
+                    <Section title={t("testConfig")}>
                         <TestConfigForm onSubmit={handleConfigSubmit} />
                     </Section>
                 }
 
                 {step === "students" && testConfig.numberOfQuestions > 0 && (
                     <Section
-                        title="Dodaj uczniów i odpowiedzi"
+                        title={t("addStudents")}
                         extraElementContent={
                             <NavButtons
                                 onBackToStudents={() => setStep("students")}
@@ -65,7 +65,7 @@ const TestChecker: React.FC = () => {
 
                 {step === "results" && testConfig.numberOfQuestions > 0 && (
                     <Section
-                        title="Wyniki"
+                        title={t("results")}
                         extraElementContent={
                             <NavButtons
                                 onBackToStudents={() => setStep("students")}

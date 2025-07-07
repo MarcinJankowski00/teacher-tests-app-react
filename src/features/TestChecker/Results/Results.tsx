@@ -3,6 +3,7 @@ import type { Student, TestConfig } from "../../../types";
 import { Cell, Table, TableContainer } from "../styled";
 import { exportToPDF } from "./ExportToPDF";
 import { exportToExcel } from "./ExportToXLSX";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   students: Student[];
@@ -13,7 +14,7 @@ export const Results: React.FC<Props> = ({
   students,
   config,
 }) => {
-
+  const { t } = useTranslation();
   const generateResults = () => {
     return students.map((student) => {
       const score = student.answers.reduce((acc, answer, index) => {
@@ -39,17 +40,36 @@ export const Results: React.FC<Props> = ({
     }
   };
 
+    const handleExporToPDF = () => {
+    const headers = [
+      t("studentID"),
+      t("row"),
+      t("points"),
+      t("grade"),
+    ];
+    exportToPDF(generateResults(), headers);
+  };
+
+    const handleExporToExcel = () => {
+    exportToExcel(generateResults(), {
+      id: t("studentID"),
+      row: t("row"),
+      score: t("points"),
+      grade: t("grade"),
+    });
+  };
+
   return (
     <>
       <TableContainer>
         <Table result={true} visible={true}>
           <tr>
-            <th>ID ucznia</th>
-            <th>Rząd</th>
-            <th>Odpowiedzi</th>
-            <th>Klucz</th>
-            <th>Wynik</th>
-            <th>Ocena</th>
+            <th>{t("studentID")}</th>
+            <th>{t("row")}</th>
+            <th>{t("answers")}</th>
+            <th>{t("key")}</th>
+            <th>{t("result")}</th>
+            <th>{t("grade")}</th>
           </tr>
           {students.map((student) => {
             const score = student.answers.reduce((acc, answer, index) => {
@@ -71,8 +91,8 @@ export const Results: React.FC<Props> = ({
           })}
         </Table>
       </TableContainer>
-      <button onClick={() => exportToPDF(generateResults())}>Eksportuj do PDF</button>
-      <button onClick={() => exportToExcel(generateResults())}>Eksportuj do XLSX</button>
+      <button onClick={handleExporToPDF}>{t("exportPDF")}</button>
+      <button onClick={handleExporToExcel}>{t("exportXLSX")}</button>
     </>
   );
 };

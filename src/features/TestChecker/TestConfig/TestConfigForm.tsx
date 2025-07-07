@@ -4,12 +4,14 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 import { setTestConfig } from "./testConfigSlice";
 import type { TestConfig, GradeThreshold } from "../../../types";
 import { Button, Div, Form, Input, KeyInput, Label, Wrapper } from "../styled";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   onSubmit: (config: TestConfig) => void;
 };
 
 export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const config = useAppSelector((state) => state.testConfig);
 
@@ -100,7 +102,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
         <h3>Test:</h3>
         <Label short={true}>
           <label htmlFor="rows">
-            Liczba pytań:
+            {t("numberOfQuestions")}
           </label>
           <Input
             id="rows"
@@ -112,7 +114,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
         </Label>
         <Label short={true}>
           <label htmlFor="rows">
-            Liczba rzędów:
+            {t("numberOfRows")}
           </label>
           <Input
             id="rows"
@@ -126,14 +128,14 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
         {Array.from({ length: numberOfRows }, (_, i) => (
           <Label key={i}>
             <label htmlFor="rows">
-              Klucz odpowiedzi – rząd {i + 1}:
+              {t("keyRow")} {i + 1}:
               <br />
             </label>
             <KeyInput
               id="rows"
               type="text"
               value={answerKey[i] || ""}
-              placeholder="np. a,b,c"
+              placeholder={t("answersPlaceholdera")}
               onChange={(e) => handleAnswerChange(i, e.target.value)}
             />
           </Label>
@@ -141,10 +143,10 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
         <br />
       </Div>
       <Div>
-        <h3>Skala ocen:</h3>
+        <h3>{t("gradeScale")}:</h3>
         <Label>
           <label>
-            Ile ocen w skali?
+            {t("howManyGrades")}?
             <Input
               type="number"
               min={2}
@@ -158,14 +160,14 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
           <div key={i} style={{ marginBottom: "0.5rem" }}>
             <Label>
               <label>
-                Ocena #{i + 1}:{" "}
+                {t("grade")} #{i + 1}:{" "}
                 <Input
                   type="text"
-                  placeholder="np. 5 lub A"
+                  placeholder={t("gradePlaceholder")}
                   value={grade.grade}
                   onChange={(e) => handleGradeChange(i, "grade", e.target.value)}
                 />
-                od:{" "}
+                {t("from")}:{" "}
                 <Input
                   type="number"
                   min={0}
@@ -181,7 +183,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
       </Div>
       </Wrapper>
       <br />
-      <Button type="submit">Zatwierdź</Button>
+      <Button type="submit">{t("confirm")}</Button>
     </Form >
   );
 };

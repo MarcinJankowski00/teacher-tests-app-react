@@ -1,4 +1,5 @@
 import { Wrapper, Button } from "./styled";
+import { useTranslation } from "react-i18next";
 
 
 type Props = {
@@ -12,11 +13,12 @@ export const NavButtons: React.FC<Props> = ({
   onBackToConfig,
   step,
 }) => {
+  const { t } = useTranslation();
     return (
         <Wrapper>
-            <Button onClick={onBackToStudents} visible={step==="students" ? false : true }>Wróć do uczniów</Button>
+            <Button onClick={onBackToStudents} visible={step==="students" ? false : true }>{t("backToStudents")}</Button>
             <Button onClick={onBackToConfig} visible={true}>
-                Zmień konfigurację testu
+                {t("changeConfig")}
             </Button>
         </Wrapper>
     );

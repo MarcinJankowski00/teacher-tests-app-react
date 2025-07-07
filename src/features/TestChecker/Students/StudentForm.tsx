@@ -3,6 +3,7 @@ import type { Student } from "../../../types";
 import DeleteIcon from "../../../assets/DeleteIcon.svg";
 import EditIcon from "../../../assets/EditIcon.svg";
 import { Button, Buttons, Div, FormDiv, IconButton, Img, Input, Label, SecondaryButton, StudentLabel, List, TableContainer, Item } from "../styled";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   numberOfQuestions: number;
@@ -19,6 +20,7 @@ export const StudentForm: React.FC<Props> = ({
   setStudents,
   onSubmitAll,
 }) => {
+  const { t } = useTranslation();
   const [studentId, setStudentId] = useState("");
   const [studentAnswers, setStudentAnswers] = useState("");
   const [studentRow, setStudentRow] = useState(1); // domyślnie rząd 1
@@ -40,12 +42,12 @@ export const StudentForm: React.FC<Props> = ({
     const answers = studentAnswers.trim().split(",").map((a) => a.trim());
 
     if (answers.length !== numberOfQuestions) {
-      alert(`Uczeń powinien mieć ${numberOfQuestions} odpowiedzi.`);
+      alert(`${t("studentsAlert1")} ${numberOfQuestions} ${t("studentsAlertAnswers")}`);
       return;
     }
 
     if (!studentId.trim()) {
-      alert("ID ucznia nie może być puste.");
+      alert(t("studentsAlert2"));
       return;
     }
 
@@ -62,7 +64,7 @@ export const StudentForm: React.FC<Props> = ({
       setEditingIndex(null);
     } else {
       if (students.some((s) => s.id === newStudent.id)) {
-        alert("Uczeń o takim ID już istnieje!");
+        alert(t("studentsAlert3"));
         return;
       }
       setStudents([...students, newStudent]);
@@ -87,7 +89,7 @@ export const StudentForm: React.FC<Props> = ({
 
   const handleSubmitAll = () => {
     if (students.length === 0) {
-      alert("Nie dodano żadnych uczniów.");
+      alert(t("studentsAlert4"));
       return;
     }
     onSubmitAll(students);
@@ -96,15 +98,15 @@ export const StudentForm: React.FC<Props> = ({
   return (
     <FormDiv>
       <Div>
-        <h3>{editingIndex !== null ? "Edytuj ucznia" : "Dodaj ucznia"}</h3>
+        <h3>{editingIndex !== null ? t("editStudent") : t("addStudent")}</h3>
         <StudentLabel>
           <label htmlFor="rows">
-            ID ucznia:
+            {t("studentID")}
           </label>
           <Input
             id="rows"
             long={true}
-            placeholder="np. imię lub indeks"
+            placeholder={t("studentIDPlaceholder")}
             type="text"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
@@ -112,12 +114,12 @@ export const StudentForm: React.FC<Props> = ({
         </StudentLabel>
         <StudentLabel>
           <label htmlFor="rows">
-            Odpowiedzi:
+            {t("answers")}
           </label>
           <Input
             id="rows"
             long={true}
-            placeholder="np. a,b,c"
+            placeholder={t("answersPlaceholder")}
             type="text"
             value={studentAnswers}
             onChange={(e) => setStudentAnswers(e.target.value)}
@@ -125,7 +127,7 @@ export const StudentForm: React.FC<Props> = ({
         </StudentLabel>
         <Label>
           <label>
-            Rząd:{" "}
+            {t("row")}:{" "}
             <select
               value={studentRow}
               onChange={(e) => setStudentRow(Number(e.target.value))}
@@ -140,26 +142,26 @@ export const StudentForm: React.FC<Props> = ({
         </Label>
         <Buttons>
         <SecondaryButton type="button" onClick={handleAddOrUpdateStudent}>
-          {editingIndex !== null ? "Zapisz zmiany" : "Dodaj ucznia"}
+          {editingIndex !== null ? t("saveChanges") : t("addStudent")}
         </SecondaryButton>
         {editingIndex !== null && (
           <SecondaryButton
             type="button"
             onClick={() => setEditingIndex(null)}
           >
-            Anuluj edycję
+            {t("cancel")}
           </SecondaryButton>
         )}
         </Buttons>
       </Div>
       <Div>
-        <h3>Dodani uczniowie ({students.length}):</h3>
+        <h3>{t("addedStudents")} ({students.length}):</h3>
         <TableContainer>
           <List visible={students.length === 0 ? false : true}>
             <Item>
-              <span>ID ucznia</span>
-              <span>Rząd</span>
-              <span>Odpowiedzi</span>
+              <span>{t("studentID")}</span>
+              <span>{t("row")}</span>
+              <span>{t("answers")}</span>
               <span></span>
               <span></span>
             </Item>
@@ -176,7 +178,7 @@ export const StudentForm: React.FC<Props> = ({
         </TableContainer>
       </Div>
       <Button onClick={handleSubmitAll}>
-        Zatwierdź wszystkich
+        {t("confirmAll")}
       </Button>
     </FormDiv>
   );
