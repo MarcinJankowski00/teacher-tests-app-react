@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 type LanguageState = {
   currentLanguage: string;
 };
-const initialLanguage = localStorage.getItem("language") || "pl";
+const initialLanguage = localStorage.getItem("language") || "en";
 
 const initialState: LanguageState = {
   currentLanguage: initialLanguage,
