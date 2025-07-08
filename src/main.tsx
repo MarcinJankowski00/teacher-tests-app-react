@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import GlobalStyle from "./GlobalStyle";
 import "./i18n";
+import "flag-icons/css/flag-icons.min.css";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
