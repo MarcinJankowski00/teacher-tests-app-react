@@ -98,24 +98,24 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
       <Wrapper>
       <Div>
         <h3>Test:</h3>
-        <Label short={true}>
-          <label htmlFor="rows">
+        <Label short="true">
+          <label htmlFor="numberOfQuestions">
             {t("numberOfQuestions")}
           </label>
           <Input
-            id="rows"
+            id="numberOfQuestions"
             type="number"
             min={1}
             value={numberOfQuestions}
             onChange={(e) => setNumberOfQuestions(Number(e.target.value))}
           />
         </Label>
-        <Label short={true}>
-          <label htmlFor="rows">
+        <Label short="true">
+          <label htmlFor="numberOfRows">
             {t("numberOfRows")}
           </label>
           <Input
-            id="rows"
+            id="numberOfRows"
             type="number"
             min={1}
             value={numberOfRows}
@@ -125,12 +125,12 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
 
         {Array.from({ length: numberOfRows }, (_, i) => (
           <Label key={i}>
-            <label htmlFor="rows">
+            <label htmlFor="keyRow">
               {t("keyRow")} {i + 1}:
               <br />
             </label>
             <KeyInput
-              id="rows"
+              id="keyRow"
               type="text"
               value={answerKey[i] || ""}
               placeholder={t("answersPlaceholdera")}

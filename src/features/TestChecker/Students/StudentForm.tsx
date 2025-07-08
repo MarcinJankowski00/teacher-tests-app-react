@@ -100,12 +100,12 @@ export const StudentForm: React.FC<Props> = ({
       <Div>
         <h3>{editingIndex !== null ? t("editStudent") : t("addStudent")}</h3>
         <StudentLabel>
-          <label htmlFor="rows">
+          <label htmlFor="studentID">
             {t("studentID")}
           </label>
           <Input
-            id="rows"
-            long={true}
+            id="studentID"
+            long="true"
             placeholder={t("studentIDPlaceholder")}
             type="text"
             value={studentId}
@@ -113,12 +113,12 @@ export const StudentForm: React.FC<Props> = ({
           />
         </StudentLabel>
         <StudentLabel>
-          <label htmlFor="rows">
+          <label htmlFor="answers">
             {t("answers")}
           </label>
           <Input
-            id="rows"
-            long={true}
+            id="answers"
+            long="true"
             placeholder={t("answersPlaceholder")}
             type="text"
             value={studentAnswers}
@@ -157,7 +157,7 @@ export const StudentForm: React.FC<Props> = ({
       <Div>
         <h3>{t("addedStudents")} ({students.length}):</h3>
         <TableContainer>
-          <List visible={students.length === 0 ? false : true}>
+          <List visible={students.length === 0 ? "false" : "true"}>
             <Item>
               <span>{t("studentID")}</span>
               <span>{t("row")}</span>

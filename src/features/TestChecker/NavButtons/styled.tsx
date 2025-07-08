@@ -8,8 +8,8 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Button = styled.button<{ visible: boolean }>`
-    display: ${({ visible }) => (visible ? "block" : "none")};
+export const Button = styled.button<{ visible: string }>`
+    display: ${({ visible }) => (visible === "true" ? "block" : "none")};
     background-color: transparent;
     border: none;
     color: ${({ theme }) => theme.color.teal};

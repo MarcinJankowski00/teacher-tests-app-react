@@ -26,38 +26,38 @@ export const Button = styled.button`
     margin: 20px 20px 0px 20px;
 `;
 
-export const Label = styled.div<{ short?: boolean }>`
-    max-width: ${({ short }) => (short ? "310px" : "none")};
+export const Label = styled.div<{ short?: string }>`
+    max-width: ${({ short }) => (short ==="true" ? "310px" : "none")};
     margin-bottom: 10px;
-    ${({ short }) => (short ? "display: flex;" : "")};
+    ${({ short }) => (short ==="true" ? "display: flex;" : "")};
     justify-content: space-between;
     align-items: center;
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        max-width: ${({ short }) => (short ? "240px" : "none")};
+        max-width: ${({ short }) => (short ==="true" ? "240px" : "none")};
     }
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
-        max-width: ${({ short }) => (short ? "180px" : "none")};
+        max-width: ${({ short }) => (short ==="true" ? "180px" : "none")};
     }
 `;
 
-export const StudentLabel = styled.div<{ short?: boolean }>`
+export const StudentLabel = styled.div<{ short?: string }>`
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 `;
 
-export const Input = styled.input<{ long?: boolean }>`
-    max-width: ${({ long }) => (long ? "none" : "50px")};
-    width: ${({ long }) => (long ? "85%" : "50%")};
-    margin: ${({ long }) => (long ? "0" : "0 5px")};
+export const Input = styled.input<{ long?: string }>`
+    max-width: ${({ long }) => (long === "true" ? "none" : "50px")};
+    width: ${({ long }) => (long === "true" ? "85%" : "50%")};
+    margin: ${({ long }) => (long === "true" ? "0" : "0 5px")};
     border-radius: 5px;
     border-width: 1px;
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax}px) {
-        max-width: ${({ long }) => (long ? "60%" : "30px")};
+        max-width: ${({ long }) => (long === "true" ? "60%" : "30px")};
     }
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
-        max-width: ${({ long }) => (long ? "60%" : "25px")};
+        max-width: ${({ long }) => (long === "true" ? "60%" : "25px")};
     }
 `;
 
@@ -97,23 +97,23 @@ export const TableContainer = styled.div`
     overflow-x: auto;
 `;
 
-export const Table = styled.table<{ result?: boolean , visible?: boolean }>`
-    font-size: ${({ result }) => (result ? "none" : "15px")};
-    display: ${({ visible }) => (visible ? "table" : "none")};
+export const Table = styled.table<{ result?: string , visible?: string }>`
+    font-size: ${({ result }) => (result === "true" ? "none" : "15px")};
+    display: ${({ visible }) => (visible === "true" ? "table" : "none")};
     text-align: center;
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 10px;
     @media(max-width: ${({ theme }) => theme.breakpoint.mobileMax1}px) {
-        font-size: ${({ result }) => (result ? "none" : "10px")};
+        font-size: ${({ result }) => (result === "true" ? "none" : "10px")};
     }
 `;
 
-export const Cell = styled.td<{ result?: boolean }>`
+export const Cell = styled.td<{ result?: string }>`
     border: 2px solid gray;
     padding: 8px;
     text-align: center;
-    max-width: ${({ result }) => (result ? "none" : "150px")};
+    max-width: ${({ result }) => (result === "true" ? "none" : "150px")};
     min-width: 50px;
 `;
 
@@ -126,8 +126,8 @@ export const IconButton = styled.button`
     padding: 6px;
 `;
 
-export const List = styled.ul<{ visible?: boolean }>`
-    display: ${({ visible }) => (visible ? "table" : "none")};
+export const List = styled.ul<{ visible?: string }>`
+    display: ${({ visible }) => (visible === "true" ? "table" : "none")};
     list-style: none;
     width: 100%;
     padding: 0;

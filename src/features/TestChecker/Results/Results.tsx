@@ -40,7 +40,7 @@ export const Results: React.FC<Props> = ({
     }
   };
 
-    const handleExporToPDF = () => {
+  const handleExporToPDF = () => {
     const headers = [
       t("studentID"),
       t("row"),
@@ -50,7 +50,7 @@ export const Results: React.FC<Props> = ({
     exportToPDF(generateResults(), headers);
   };
 
-    const handleExporToExcel = () => {
+  const handleExporToExcel = () => {
     exportToExcel(generateResults(), {
       id: t("studentID"),
       row: t("row"),
@@ -62,15 +62,18 @@ export const Results: React.FC<Props> = ({
   return (
     <>
       <TableContainer>
-        <Table result={true} visible={true}>
-          <tr>
-            <th>{t("studentID")}</th>
-            <th>{t("row")}</th>
-            <th>{t("answers")}</th>
-            <th>{t("key")}</th>
-            <th>{t("result")}</th>
-            <th>{t("grade")}</th>
-          </tr>
+        <Table result="true" visible="true">
+          <thead>
+            <tr>
+              <th>{t("studentID")}</th>
+              <th>{t("row")}</th>
+              <th>{t("answers")}</th>
+              <th>{t("key")}</th>
+              <th>{t("result")}</th>
+              <th>{t("grade")}</th>
+            </tr>
+          </thead>
+          <tbody>
           {students.map((student) => {
             const score = student.answers.reduce((acc, answer, index) => {
               const rowIndex = student.row - 1;
@@ -89,6 +92,7 @@ export const Results: React.FC<Props> = ({
               </tr>
             );
           })}
+          </tbody>
         </Table>
       </TableContainer>
       <button onClick={handleExporToPDF}>{t("exportPDF")}</button>

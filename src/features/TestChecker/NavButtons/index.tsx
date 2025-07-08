@@ -16,8 +16,8 @@ export const NavButtons: React.FC<Props> = ({
   const { t } = useTranslation();
     return (
         <Wrapper>
-            <Button onClick={onBackToStudents} visible={step==="students" ? false : true }>{t("backToStudents")}</Button>
-            <Button onClick={onBackToConfig} visible={true}>
+            <Button onClick={onBackToStudents} visible={step==="students" ? "false" : "true" }>{t("backToStudents")}</Button>
+            <Button onClick={onBackToConfig} visible="true">
                 {t("changeConfig")}
             </Button>
         </Wrapper>
