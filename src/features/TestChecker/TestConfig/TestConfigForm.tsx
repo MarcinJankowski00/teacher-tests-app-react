@@ -133,7 +133,7 @@ export const TestConfigForm: React.FC<Props> = ({ onSubmit }) => {
               id="keyRow"
               type="text"
               value={answerKey[i] || ""}
-              placeholder={t("answersPlaceholdera")}
+              placeholder={t("answersPlaceholder")}
               onChange={(e) => handleAnswerChange(i, e.target.value)}
             />
           </Label>
